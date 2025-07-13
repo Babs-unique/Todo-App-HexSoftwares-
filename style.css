@@ -47,9 +47,13 @@ body{
     border: none;
     padding: 15px;
     border-radius: 5px;
+    color:white;
 }
-.todo input::placeholder{
-    
+.todo input:focus{
+    border: none;
+}
+.todo input:active{
+    border: none;
 }
 .todo_list_items{
     display: flex;
@@ -121,4 +125,32 @@ body{
     margin-top: .5rem;
     color: hsla(0, 0%, 100%, 0.418);
     opacity: .5;
+}
+@media (min-width:426px) and (max-width:768px) {
+    body{
+        background: url("./images/bg-mobile-dark.jpg");
+        background-repeat: no-repeat;
+        background-color: hsl(235, 21%, 11%);
+        color: white;
+        background-size: 100% 50%;
+    }
+    .container{
+        width: 60%;
+    }
+}
+@media (min-width:769px) and (max-width:1440px) {
+    body{
+        background: url("./images/bg-mobile-dark.jpg");
+        background-repeat: no-repeat;
+        background-color: hsl(235, 21%, 11%);
+        color: white;
+        background-size: 100% 50%;
+    }
+    .container{
+        width: 40%;
+        margin: auto;
+    }
+    .todo_list_items div{
+        padding: 10px;
+    }
 }
