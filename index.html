@@ -10,17 +10,19 @@
         <div class="container">
             <div class="todo_title">
                 <h2>TODO</h2>
-                <img src="./images/icon-sun.svg" alt="Light Mode Toggle">
+                <button id="toggleBtn">
+                    <img src="./images/icon-sun.svg" alt="Light Mode Toggle" id="toggleMode">
+                </button>
             </div>
             <div class="todo_list">
                 <div class="todo">
-                    <input type="text" placeholder="">
+                    <input type="text" placeholder="Start Typing..." id="input">
                 </div>
-                <div class="todo_list_items">
-                    <div class="list_items">
+                <div class="todo_list_items" id="todo-container">
+                <!--     <div class="list_items">
                         <div class="chh">
-                        <input type="checkbox" name="" id="">
-                    <span>Complete online Javascript Course</span>
+                        <input type="checkbox" name="" id="checkbox">
+                    <span id="span">Complete online Javascript Course</span>
                     </div>
                     <div class="cr">
                         <img src="./images/icon-cross.svg" alt="Cancel todo">
@@ -74,12 +76,16 @@
                     <div class="items">
                         <p>5 items left</p>
                         <span>Clear Completed</span>
-                    </div>
+                    </div> -->
                 </div>
+                <div class="items">
+                        <p id="countTodo">0 items left</p>
+                        <span id="clearComplete">Clear Completed</span>
+                    </div>
                     <div class="todo_filter">
-                        <button>All</button>
-                        <button>Active</button>
-                        <button>Completed</button>
+                        <button id="allTodos">All</button>
+                        <button id="activeTodos">Active</button>
+                        <button id="completedTodos">Completed</button>
                     </div>
                     <p class="drag_drop">Drag and drop to reorder list </p>
             </div>
