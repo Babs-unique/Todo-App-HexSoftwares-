@@ -47,7 +47,7 @@ function addTodo(event){
             const cancelBtn = listItems.querySelector(".cancel-btn")
             cancelBtn.addEventListener('click',()=>{
                     listItems.remove();
-                    deleteLocalTodo(listItems);
+                    saveTodosToLocal();
                     countedTodo();
             });
         //MARK COMPLETED TODO
@@ -56,6 +56,7 @@ function addTodo(event){
         completedTodo.addEventListener('click',()=>{
             console.log("checked");
             spanElement.classList.toggle("line-through");
+            saveTodosToLocal();
         });
         //INCREMENT AND COUNT TODO
         countedTodo();
@@ -124,4 +125,61 @@ activeTodos.addEventListener('click',()=>{
 
 
 //LOCALSTORAGE FOR THE TODO
+// Save all todos to localStorage
+function saveTodosToLocal() {
+    const todos = [];
+    document.querySelectorAll(".list_items").forEach(item => {
+        const text = item.querySelector(".text").textContent;
+        const checked = item.querySelector(".completed").checked;
+        todos.push({ text, checked });
+    });
+    localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+// Load todos from localStorage
+function loadTodosFromLocal() {
+    const todos = JSON.parse(localStorage.getItem("todos")) || [];
+    const container = document.getElementById("todo-container");
+    container.innerHTML = "";
+    todos.forEach(todo => {
+        let listItems = document.createElement("li");
+        listItems.className = "list_items";
+        listItems.innerHTML = `<div class="chh">
+                                <input type="checkbox" class="completed" ${todo.checked ? "checked" : ""}>
+                                <span class="text">${todo.text}</span>
+                            </div>
+                            <div class="cr">
+                                <img src="./images/icon-cross.svg" alt="Cancel todo" class="cancel-btn">
+                            </div>`;
+        container.appendChild(listItems);
+
+        // Delete todo
+        listItems.querySelector(".cancel-btn").addEventListener('click', () => {
+            listItems.remove();
+            saveTodosToLocal();
+            countedTodo();
+        });
+
+        // Mark completed
+        const completedTodo = listItems.querySelector(".completed");
+        let spanElement = listItems.querySelector(".text");
+        if (todo.checked) {
+            spanElement.classList.add("line-through");
+        }
+        completedTodo.addEventListener('click', () => {
+            spanElement.classList.toggle("line-through");
+            saveTodosToLocal();
+        });3
+    });
+    countedTodo();
+}
+
+// Call saveTodosToLocal after every change
+document.addEventListener("DOMContentLoaded", loadTodosFromLocal);
+document.getElementById("input").addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && inputBox.value !== "") {
+        setTimeout(saveTodosToLocal, 0);
+    }
+});
+document.getElementById("clearComplete").addEventListener("click", saveTodosToLocal);
 
