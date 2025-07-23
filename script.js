@@ -74,6 +74,11 @@ function countedTodo(){
     let todoItem = document.querySelectorAll(".list_items");
     todoCount.innerHTML = `<p>${todoItem.length} items left</p>`;
 }
+function countedVisibleTodo() {
+    let visibleTodos = Array.from(document.querySelectorAll(".list_items"))
+        .filter(item => item.style.display !== "none");
+    todoCount.innerHTML = `<p>${visibleTodos.length} items left</p>`;
+}
 
 //CLEAR ALL COMPLETED TODO
 let clearCompleted = document.getElementById("clearComplete");
@@ -97,7 +102,7 @@ allTodos.addEventListener('click',()=>{
     document.querySelectorAll(".list_items").forEach((item)=>{
         item.style.display = "flex";
     })
-    countedTodo();
+    countedVisibleTodo();
 })
 completedTodos.addEventListener('click',()=>{
     document.querySelectorAll(".list_items").forEach((item) =>{
@@ -108,7 +113,7 @@ completedTodos.addEventListener('click',()=>{
             item.style.display = "none";
         }
     })
-    countedTodo();
+    countedVisibleTodo();
 })
 activeTodos.addEventListener('click',()=>{
     document.querySelectorAll(".list_items").forEach((item) =>{
@@ -119,7 +124,7 @@ activeTodos.addEventListener('click',()=>{
             item.style.display = "none";
         }
     })
-    countedTodo();
+    countedVisibleTodo();
 })
 
 
@@ -169,7 +174,7 @@ function loadTodosFromLocal() {
         completedTodo.addEventListener('click', () => {
             spanElement.classList.toggle("line-through");
             saveTodosToLocal();
-        });3
+        });
     });
     countedTodo();
 }
