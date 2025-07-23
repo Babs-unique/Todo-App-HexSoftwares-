@@ -30,7 +30,7 @@ function addTodo(event){
         }else{
         console.log(inputBox.value);
         let container = document.getElementById("todo-container");
-        let listItems = document.createElement("div");
+        let listItems = document.createElement("li");
         listItems.className = "list_items";
         listItems.innerHTML = `<div class="chh">
                                 <input type="checkbox" name="" id="checkbox" class="completed">
@@ -44,12 +44,12 @@ function addTodo(event){
             
             //DELETE TODO
             /*     let container = document.getElementById("todo-container"); */
-                const cancelBtn = listItems.querySelector(".cancel-btn")
-        cancelBtn.addEventListener('click',()=>{
-                listItems.remove();
-                deleteLocalTodo();
-                countedTodo();
-        });
+            const cancelBtn = listItems.querySelector(".cancel-btn")
+            cancelBtn.addEventListener('click',()=>{
+                    listItems.remove();
+                    deleteLocalTodo(listItems);
+                    countedTodo();
+            });
         //MARK COMPLETED TODO
         const completedTodo = listItems.querySelector(".completed");
         let spanElement = listItems.querySelector(".text");
@@ -59,9 +59,6 @@ function addTodo(event){
         });
         //INCREMENT AND COUNT TODO
         countedTodo();
-
-        saveLocalTodo(inputBox.value);
-
         //REMOVE TEXT IN TE INPUT BOX AFTER CLICKING ENTER
         inputBox.value = "";
     }
@@ -128,75 +125,3 @@ activeTodos.addEventListener('click',()=>{
 
 //LOCALSTORAGE FOR THE TODO
 
-//SAVE TODO TO LOCALSTORAGE
-const saveLocalTodo = (todo)=>{
-    let todos;
-    if (localStorage.getItem("todos")=== "null") {
-        todos =[];
-    }else{
-        todos = JSON.parse(localStorage.getItem("todos"));
-    }
-    console.log(localStorage.getItem("todos"))
-    console.log(JSON.parse(localStorage.getItem("todos")))
-    /* todos = JSON.parse(localStorage.getItem("todos")); */
-    todos.push(todo);
-    localStorage.setItem("todos",JSON.stringify(todos));
-    console.log(todos);
-}
-
-//GET TODO FROM LOCALSTORAGE
-const getLocalTodo = ()=>{
-    let todos;
-    if (localStorage.getItem("todos")=== "null") {
-        todos =[];
-    }else{
-        todos = JSON.parse(localStorage.getItem("todos"));
-        todos.forEach(todo=>{
-        let container = document.getElementById("todo-container");
-        let listItems = document.createElement("div");
-        listItems.className = "list_items";
-        listItems.innerHTML = `<div class="chh">
-                                <input type="checkbox" name="" id="checkbox" class="completed">
-                            <span class="text">${todo}</span>
-                            </div>
-                            <div class="cr">
-                                <img src="./images/icon-cross.svg" alt="Cancel todo" id="cancel-todo" class="cancel-btn">
-                            </div>`
-                container.appendChild(listItems);
-
-            
-            //DELETE TODO
-            /*     let container = document.getElementById("todo-container"); */
-                const cancelBtn = listItems.querySelector(".cancel-btn")
-        cancelBtn.addEventListener('click',()=>{
-                listItems.remove();
-                countedTodo();
-        });
-        //MARK COMPLETED TODO
-        const completedTodo = listItems.querySelector(".completed");
-        let spanElement = listItems.querySelector(".text");
-        completedTodo.addEventListener('click',()=>{
-            console.log("checked");
-            spanElement.classList.toggle("line-through");
-        });
-        countedTodo();
-
-        });
-    }};
-//DELETE TODO FROM LOCALSTORAGE
-const deleteLocalTodo = (todo)=>{
-    let todos;
-    if (localStorage.getItem("todos")=== "null") {
-        todos =[];
-    }else{
-        todos = JSON.parse(localStorage.getItem("todos"));
-    }
-    let todoText = todo.children[0];
-    let todoIndex = todos.indexOf(todoText);
-    todos.splice(todoIndex,1);
-    localStorage.setItem('todos',JSON.stringify(todos))
-    console.log(todoText);
-
-
-}
-document.addEventListener('DOMContentLoaded' ,getLocalTodo);
